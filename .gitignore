@@ -1,0 +1,8 @@
+# test files
+test*
+
+# all files without an extension
+*
+!/**/
+!*.*
+
