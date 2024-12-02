@@ -1,6 +1,9 @@
 # test files
 test*
 
+# program inputs
+*.txt
+
 # all files without an extension
 *
 !/**/
