@@ -1,6 +1,6 @@
 use std::cmp::{min, max};
 
-const FILE_PATH: &str = "./day1.txt";
+const FILE_PATH: &str = "./day01.txt";
 
 fn main() {
     let mut left_list: Vec<u32> = Vec::new();
