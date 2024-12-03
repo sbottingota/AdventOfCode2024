@@ -1,11 +1,6 @@
-# test files
-test*
-
-# program inputs
+# Program Inputs
 *.txt
 
-# all files without an extension
-*
-!/**/
-!*.*
+# Added by cargo
 
+/target
