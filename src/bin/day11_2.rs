@@ -2,29 +2,13 @@ use std::collections::HashMap;
 
 const FILE_PATH: &str = "day11.txt";
 
-struct Stones {
-    stones: HashMap<u128, usize>,
-}
+type Stones = HashMap<u128, usize>;
 
-impl Stones {
-    fn new() -> Self {
-        Stones { stones: HashMap::new() }
-    }
-
-    fn add(&mut self, key: u128, value: usize) {
-        if stones.contains_key(&key) {
-            *self.stones.get_mut(&key).unwrap() += value;
-        } else {
-            self.stones.insert(key, value);
-        }
-    }
-
-    fn reserve(&mut self, additional: usize) {
-        self.stones.reserve(additional);
-    }
-
-    fn get(&self, key: u128) -> &usize {
-        self.stones.get(key)
+fn add(stones: &mut Stones, key: u128, value: usize) {
+    if stones.contains_key(&key) {
+        *stones.get_mut(&key).unwrap() += value;
+    } else {
+        stones.insert(key, value);
     }
 }
 
@@ -37,31 +21,33 @@ fn main() {
 
     let mut stones = Stones::new();
     for stone in stones_vec {
-        stones.add(stone, 1);
+        add(&mut stones, stone, 1);
     }
 
-    println!("{:?}", stones);
-
-    for i in 0..25 {
-        println!("{}", i);
+    for _ in 0..75 {
         let mut new_stones = Stones::new();
         new_stones.reserve(stones.len());
 
-        for stone in stones {
+        for (stone, count) in stones {
             if stone == 0 {
-                new_stones.add(1, stones.get(stone));
+                add(&mut new_stones, 1, count);
             } else if stone.to_string().len() % 2 == 0 {
                 let stone_string = stone.to_string();
-                new_stones.add(stone_string[..stone_string.len() / 2].parse().unwrap(), stones.get(stone));
-                new_stones.push(stone_string[stone_string.len() / 2..].parse().unwrap());
+                add(&mut new_stones, stone_string[..stone_string.len() / 2].parse().unwrap(), count);
+                add(&mut new_stones, stone_string[stone_string.len() / 2..].parse().unwrap(), count);
             } else {
-                new_stones.push(stone * 2024);
+                add(&mut new_stones, stone * 2024, count);
             }
         }
         stones = new_stones;
     }
 
-    println!("{}", stones.len());
-    */
+    let mut stone_count = 0_usize;
+
+    for count in stones.values() {
+        stone_count += count;
+    }
+
+    println!("{}", stone_count);
 }
 
